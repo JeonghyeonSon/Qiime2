@@ -1,0 +1,44 @@
+
+
+1. activate qiime2 in wsl environment
+
+conda activate qiime2-amplicon-2025.7
+
+2. Setting working directory
+
+cd "/mnt/d/OneDrive/qiime/yesid_raw data/zr25695.rawdata.250827"
+
+3. create the manifest.tsv file
+( \
+  echo -e "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"; \
+  paste \
+    <(ls *R1.fastq.gz | sort -V) \
+    <(ls *R2.fastq.gz | sort -V) \
+  | awk -v path="$(pwd)/" '{OFS="\t"; print "sample-"NR, path$1, path$2}' \
+) > manifest.tsv
+
+4. verify the file
+
+head -n 3 manifest.tsv
+
+5. import data into qiime 2
+
+qiime tools import \
+  --type 'SampleData[PairedEndSequencesWithQuality]' \
+  --input-path manifest.tsv \
+  --output-path paired-end-demux.qza \
+  --input-format PairedEndFastqManifestPhred33V2
+
+6. using paired-end-demux.qza to check file quality
+
+qiime demux summarize \
+  --i-data paired-end-demux.qza \
+  --o-visualization demux.qzv
+
+7. using demux.qzv file, to check the quality of file quality (sequencing quality)
+
+go to this website "https://view.qiime2.org/"
+open the tab "interative quality plot"
+the data y value (quality score) is lower than 25 is suck
+
+
