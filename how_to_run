@@ -8,7 +8,7 @@ conda activate qiime2-amplicon-2025.7
 
 cd "/mnt/d/OneDrive/qiime/yesid_raw data/zr25695.rawdata.250827"
 
-3. create the manifest.tsv file
+3. create the manifest.tsv file (this file will be used as a list during qiime step)
 ( \
   echo -e "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"; \
   paste \
