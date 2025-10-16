@@ -20,3 +20,24 @@ scp -r "/mnt/d/OneDrive/qiime/yesid_raw data/zr25695.rawdata.250827" json7@vclvm
 # 질문나오면 yes라 하고.. 내 portal password 도 넣어주면 파일을 옮겨줌
 
 
+# 6. QIIME 2 환경 활성화
+conda activate qiime2-amplicon-2024.10
+
+# 7. 데이터 폴더로 이동
+cd /home/json7/zr25695.rawdata.250827
+
+# 8. Manifest 파일 생성 (복사해서 그대로 붙여넣으세요)
+( \
+  echo -e "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"; \
+  paste \
+    <(ls *R1.fastq.gz | sort -V) \
+    <(ls *R2.fastq.gz | sort -V) \
+  | awk -v path="$(pwd)/" '{OFS="\t"; print "sample-"NR, path$1, path$2}' \
+) > manifest.tsv
+
+# 9. 데이터 불러오기 (Import)
+qiime tools import \
+  --type 'SampleData[PairedEndSequencesWithQuality]' \
+  --input-path manifest.tsv \
+  --output-path paired-end-demux.qza \
+  --input-format PairedEndFastqManifestPhred33V2
