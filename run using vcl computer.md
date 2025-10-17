@@ -116,7 +116,7 @@ qiime dada2 denoise-paired \
 ```--p-n-threads 0```: Use all available computer cores to speed up the process.
 
 **After running this step**, we may have ```table.qza```, ```rep-seqs.qza```, and ```denoising-stats.qza```.
-```table.qza` is an **ASV table**. It is the main output, containing the counts of each microbe (ASV) across all your samples. All downstream diversity analyses are based on this file.
+```table.qza``` is an **ASV table**. It is the main output, containing the counts of each microbe (ASV) across all your samples. All downstream diversity analyses are based on this file.
 
 ```rep-seqs.qza``` contains the **Representative sequences**. It holds the unique DNA sequence for each ASV present in your feature table. This file is used to assign taxonomy (i.e., to identify the names of the microbes, such as Lactobacillus).
 
