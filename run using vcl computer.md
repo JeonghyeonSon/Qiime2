@@ -27,7 +27,7 @@ conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distr
 ```
 
 
-## 5. Upload files from my computer to VCL (using your windown terminal/ not your ubuntu environment)
+## 5. Upload files from my computer to VCL (using your ubuntu terminal in windows/ not your vcl environment)
 Please double check exact location (below code is an example)
 
 ```
