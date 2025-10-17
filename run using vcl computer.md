@@ -161,6 +161,5 @@ biom convert \
   -o genus-table.tsv \
   --to-tsv
 ```
-  --output-path exported-genus-table
-```
+
  
