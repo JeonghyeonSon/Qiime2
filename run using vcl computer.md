@@ -88,6 +88,10 @@ At what position do the quality scores for the **Forward reads (R1)** and **Reve
 Generally, you should trim the sequences at the position where the median quality score (Phred score) drops below 20-25. Data beyond this point is considered less reliable.
 
 ## 11. Denoising using DADA2
+Step 11 takes **a lot of time**.
+(less than 1 hour, it depends on hardware condition)
+
+
 ```bash
 qiime dada2 denoise-paired \
   --i-demultiplexed-seqs paired-end-demux.qza \
@@ -101,3 +105,50 @@ qiime dada2 denoise-paired \
   --p-n-threads 0
 ```
 
+```--p-trim-left-f [#]```: Replace ```[#]``` with your forward primer's length. 17
+
+```--p-trim-left-r [#]```: Replace ```[#]``` with your reverse primer's length. 24
+
+```--p-trunc-len-f 280```: Use the full length of the forward read.
+
+```--p-trunc-len-r 280```: Use the full length of the reverse read.
+
+```--p-n-threads 0```: Use all available computer cores to speed up the process.
+
+**After running this step**, we may have ```table.qza```, ```rep-seqs.qza```, and ```denoising-stats.qza```.
+```table.qza` is an **ASV table**. It is the main output, containing the counts of each microbe (ASV) across all your samples. All downstream diversity analyses are based on this file.
+
+```rep-seqs.qza``` contains the **Representative sequences**. It holds the unique DNA sequence for each ASV present in your feature table. This file is used to assign taxonomy (i.e., to identify the names of the microbes, such as Lactobacillus).
+
+```denoising-stats.qza``` provides the **DADA2 Denoising stats**. It's a report that shows how many sequences from each sample passed through the filtering and denoising steps to become a final ASV. This is very useful for quality control and identifying any problematic or contaminated samples.
+
+
+## 12. Download Classifier
+Visit this link: https://library.qiime2.org/data-resources#naive-bayes-classifiers
+Download latest classifier **Silva 138 99% OTUs full-length sequences**
+
+## 13. Generate taxonomy.qza file (Taxonomy assignments)
+```
+qiime feature-classifier classify-sklearn \
+  --i-classifier silva-138-99-nb-classifier.qza \
+  --i-reads rep-seqs.qza \
+  --o-classification taxonomy.qza \
+  --p-n-jobs 0
+```
+Now, we have two files ```table.qza``` and ```taxonomy.qza```
+
+## 14. Get ASV values at Genus level
+First, we need to organize data at genus level.
+```
+qiime taxa collapse \
+  --i-table table.qza \
+  --i-taxonomy taxonomy.qza \
+  --p-level 6 \
+  --o-collapsed-table genus-table.qza
+```
+Second, export data as tsv form (readable)
+```
+qiime tools export \
+  --input-path genus-table.qza \
+  --output-path exported-genus-table
+```
