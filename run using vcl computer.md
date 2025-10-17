@@ -146,9 +146,21 @@ qiime taxa collapse \
   --p-level 6 \
   --o-collapsed-table genus-table.qza
 ```
-Second, export data as tsv form (readable)
+Second, export data as biom
 ```
 qiime tools export \
   --input-path genus-table.qza \
   --output-path exported-genus-table
 ```
+
+Third, convert biom to tsv (final output)
+
+```
+biom convert \
+  -i exported-genus-table/feature-table.biom \
+  -o genus-table.tsv \
+  --to-tsv
+```
+  --output-path exported-genus-table
+```
+ 
