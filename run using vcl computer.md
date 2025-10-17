@@ -1,48 +1,52 @@
-## Using VCL computer in NCSU
+# Using VCL computer in NCSU
 
-# 1. Miniforge 설치 파일 다운로드
+## 1. "Miniforge" installation file download
+
 ```
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
 ```
 
-# 2. 설치 실행
+## 2. install Miniforge
+
 ```
 bash Miniforge3-Linux-x86_64.sh -b
 ```
 
-# 3. Conda 초기화 및 적용
+## 3. Initialize and activate Conda
+
 ```
 ~/miniforge3/bin/conda init
 source ~/.bashrc
 ```
 
 
-# 4. search giime 2 download through google, and find install qiime2 within a conda environment...
-이런... 곳에 접속해서 https://docs.qiime2.org/2024.10/install/native/
+## 4. Search for ‘QIIME 2 download’ on Google, and follow the instructions to install QIIME 2 within a Conda environment.
+Please visit qiime 2 website and check the most recent version of qiime2 "https://docs.qiime2.org/2024.10/install/native/"
 ```
 conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py310-linux-conda.yml
 ```
 
 
-# 5. 내 컴퓨터 파일을 vcl로 올리기...
+## 5. Upload files from my computer to VCL
+Please double check exact location (below code is an example)
+
 ```
 scp -r "/mnt/d/OneDrive/qiime/yesid_raw data/zr25695.rawdata.250827" json7@vclvm178-152.vcl.ncsu.edu:~/
 ```
+When prompted, type "yes" and enter your portal password - then the files will be uploaded.
 
-질문나오면 yes라 하고.. 내 portal password 도 넣어주면 파일을 옮겨줌
 
-
-# 6. QIIME 2 환경 활성화
+## 6. Activate the QIMME2 Environment
 ```
 conda activate qiime2-amplicon-2024.10
 ```
 
-# 7. 데이터 폴더로 이동
+## 7. Navigate to the data directory (set working directory)
 ```
 cd /home/json7/zr25695.rawdata.250827
 ```
 
-# 8. Manifest 파일 생성 (복사해서 그대로 붙여넣으세요)
+## 8. Create a Manifest file
 ```
 ( \
   echo -e "sample-id\tforward-absolute-filepath\treverse-absolute-filepath"; \
@@ -55,7 +59,7 @@ cd /home/json7/zr25695.rawdata.250827
 
 
 
-# 9. 데이터 불러오기 (Import)
+## 9. Impoort the data
 ```
 qiime tools import \
   --type 'SampleData[PairedEndSequencesWithQuality]' \
@@ -64,4 +68,4 @@ qiime tools import \
   --input-format PairedEndFastqManifestPhred33V2
 ```
 
-# 10. 
+## 10. 
