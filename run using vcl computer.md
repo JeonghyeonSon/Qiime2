@@ -56,7 +56,7 @@ cd /home/json7/zr25695.rawdata.250827
   | awk -v path="$(pwd)/" '{OFS="\t"; print "sample-"NR, path$1, path$2}' \
 ) > manifest.tsv
 ```
-
+```manifest.tsv``` should be generated. This file indicates the information of raw sequence files (including location, file name, and mapping forward and reverse read)
 
 
 ## 9. Impoort the data
@@ -67,5 +67,37 @@ qiime tools import \
   --output-path paired-end-demux.qza \
   --input-format PairedEndFastqManifestPhred33V2
 ```
+```paired-end-demux.qza``` should be generated. This file means your files ```fastq``` are successfully imported in your qiime2 environment.
 
-## 10. 
+```qza``` file is a **QIIME Zipped Artifact** and is your data.
+```qzv``` file is a  **QIIME Zipped Visualization** and is as visual representation of your data.
+
+
+## 10. Quality Control
+```
+qiime demux summarize \
+  --i-data paired-end-demux.qza \
+  --o-visualization demux.qzv
+```
+Based on these results, we will determine how many sequences to remove during the **denoising process**.
+**How to check the result**:```.qzv``` file can be opened using **QIIME 2 View website** https://view.qiime2.org/
+Whne the report opens, you will see several tabs. Click on the **Interactive Quality Plot** tab.
+This plot shows the quality scores (y-axis) at each position along the sequence length (x-axis). The key question you need to address is:
+
+At what position do the quality scores for the **Forward reads (R1)** and **Reverse reads (R2)** begins to drop significantly?
+Generally, you should trim the sequences at the position where the median quality score (Phred score) drops below 20-25. Data beyond this point is considered less reliable.
+
+## 11. Denoising using DADA2
+```bash
+qiime dada2 denoise-paired \
+  --i-demultiplexed-seqs paired-end-demux.qza \
+  --p-trim-left-f [#] \
+  --p-trim-left-r [#] \
+  --p-trunc-len-f 280 \
+  --p-trunc-len-r 280 \
+  --o-table table.qza \
+  --o-representative-sequences rep-seqs.qza \
+  --o-denoising-stats denoising-stats.qza \
+  --p-n-threads 0
+```
+
