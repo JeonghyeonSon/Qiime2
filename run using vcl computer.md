@@ -168,80 +168,97 @@ biom convert \
 ## 14-1. Get ASV values at each taxonomy level
 Phylum (level 2)
 
-# 1. Collapse taxonomy at Phylum level
+Collapse taxonomy at Phylum level
+```
 qiime taxa collapse \
   --i-table table.qza \
   --i-taxonomy taxonomy.qza \
   --p-level 2 \
   --o-collapsed-table phylum-table.qza
-
-# 2. Export data as BIOM format
+```
+Export data as BIOM format
+```
 qiime tools export \
   --input-path phylum-table.qza \
   --output-path exported-phylum-table
+```
 
-# 3. Convert BIOM to TSV (Final output for Excel/SAS)
+Convert BIOM to TSV (Final output for Excel/SAS)
+```
 biom convert \
   -i exported-phylum-table/feature-table.biom \
   -o phylum-table.tsv \
   --to-tsv
-
+```
 Family (level 5)
-# 1. Collapse taxonomy at Family level
+
+1. Collapse taxonomy at Family level
+```
 qiime taxa collapse \
   --i-table table.qza \
   --i-taxonomy taxonomy.qza \
   --p-level 5 \
   --o-collapsed-table family-table.qza
-
-# 2. Export data as BIOM format
+```
+2. Export data as BIOM format
+```
 qiime tools export \
   --input-path family-table.qza \
   --output-path exported-family-table
+```
 
-# 3. Convert BIOM to TSV (Final output for Excel/SAS)
+3. Convert BIOM to TSV (Final output for Excel/SAS)
+```
 biom convert \
   -i exported-family-table/feature-table.biom \
   -o family-table.tsv \
   --to-tsv
-
+```
 Genus level (level 6)
-# 1. Collapse taxonomy at Genus level
+1. Collapse taxonomy at Genus level
+```
 qiime taxa collapse \
   --i-table table.qza \
   --i-taxonomy taxonomy.qza \
   --p-level 6 \
   --o-collapsed-table genus-table.qza
-
-# 2. Export data as BIOM format
+```
+2. Export data as BIOM format
+```
 qiime tools export \
   --input-path genus-table.qza \
   --output-path exported-genus-table
+```
 
-# 3. Convert BIOM to TSV (Final output for Excel/SAS)
+3. Convert BIOM to TSV (Final output for Excel/SAS)
+```
 biom convert \
   -i exported-genus-table/feature-table.biom \
   -o genus-table.tsv \
   --to-tsv
-
+```
 Species level (level 7)
-# 1. Collapse taxonomy at Species level
+
+1. Collapse taxonomy at Species level
+```
 qiime taxa collapse \
   --i-table table.qza \
   --i-taxonomy taxonomy.qza \
   --p-level 7 \
   --o-collapsed-table species-table.qza
-
-# 2. Export data as BIOM format
+```
+2. Export data as BIOM format
+```
 qiime tools export \
   --input-path species-table.qza \
   --output-path exported-species-table
-
-# 3. Convert BIOM to TSV (Final output for Excel/SAS)
+```
+3. Convert BIOM to TSV (Final output for Excel/SAS)
+```
 biom convert \
   -i exported-species-table/feature-table.biom \
   -o species-table.tsv \
   --to-tsv
-
+```
 
  
