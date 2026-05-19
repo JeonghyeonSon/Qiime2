@@ -1,4 +1,6 @@
 # Using VCL computer in NCSU
+You can use a GUI environment on a VCL computer via Remote Desktop Connection (Windows)
+
 
 ## 1. "Miniforge" installation file download
 
@@ -81,11 +83,11 @@ qiime demux summarize \
 ```
 Based on these results, we will determine how many sequences to remove during the **denoising process**.
 **How to check the result**:```.qzv``` file can be opened using **QIIME 2 View website** https://view.qiime2.org/
-Whne the report opens, you will see several tabs. Click on the **Interactive Quality Plot** tab.
+When the report opens, you will see several tabs. Click on the **Interactive Quality Plot** tab.
 This plot shows the quality scores (y-axis) at each position along the sequence length (x-axis). The key question you need to address is:
 
 At what position do the quality scores for the **Forward reads (R1)** and **Reverse reads (R2)** begins to drop significantly?
-Generally, you should trim the sequences at the position where the median quality score (Phred score) drops below 20-25. Data beyond this point is considered less reliable.
+Generally, you should trim the sequences at the position where the median quality score (Phred score) drops below 20-25. Data beyond this point is considered less reliable. Again, if the score is lower than 20-25, that sucks.
 
 ## 11. Denoising using DADA2
 Step 11 takes **a lot of time**.
