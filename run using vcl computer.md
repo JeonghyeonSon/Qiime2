@@ -136,7 +136,7 @@ qiime feature-classifier classify-sklearn \
   --i-classifier 2024.09.backbone.v4.nb.sklearn-1.4.2.qza \
   --i-reads rep-seqs.qza \
   --p-confidence 0.7 \
-  --p-n-jobs 8 \
+  --p-n-jobs 0 \
   --o-classification taxonomy_gg2_c07.qza
 ```
 Now, we have two files ```table.qza``` and ```taxonomy.qza```
