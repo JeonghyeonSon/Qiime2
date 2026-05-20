@@ -134,10 +134,16 @@ Download latest classifier **Silva 138 99% OTUs full-length sequences**
 qiime feature-classifier classify-sklearn \
   --i-classifier silva-138-99-nb-classifier.qza \
   --i-reads rep-seqs.qza \
+  --p-confidence 0.6 \
   --o-classification taxonomy.qza \
   --p-n-jobs 0
 ```
 Now, we have two files ```table.qza``` and ```taxonomy.qza```
+
+The default confidence threshold is 0.7. Lowring it to 0.6 allows for a more detailed taxonomic assignment, idenifying more bacteria down to the species level.
+
+
+
 
 ## 14. Get ASV values at species level
 Here is the example for species level. If you need other levels, you can proceed with the codes in 14-1.
