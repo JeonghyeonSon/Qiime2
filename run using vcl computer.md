@@ -125,10 +125,15 @@ qiime dada2 denoise-paired \
 ```denoising-stats.qza``` provides the **DADA2 Denoising stats**. It's a report that shows how many sequences from each sample passed through the filtering and denoising steps to become a final ASV. This is very useful for quality control and identifying any problematic or contaminated samples.
 
 
+
 ## 12. Download Classifier
 Visit this link: https://library.qiime2.org/data-resources#naive-bayes-classifiers
-Download latest classifier **Silva 138 99% OTUs full-length sequences**
+Download the V3-V4 region-specific classifier instead of the full-length one to maximize species-level identification for Illumina MiSeq 2x300bp data.
 
+```
+# Download Silva 138 99% OTUs from 515F/806R region classifier
+curl -L -O "[https://data.qiime2.org/2024.10/common/silva-138-99-515f-806r-nb-classifier.qza](https://data.qiime2.org/2024.10/common/silva-138-99-515f-806r-nb-classifier.qza)"
+```
 ## 13. Generate taxonomy.qza file (Taxonomy assignments)
 ```
 qiime feature-classifier classify-sklearn \
