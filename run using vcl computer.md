@@ -126,22 +126,18 @@ qiime dada2 denoise-paired \
 
 
 
-## 12. Download Classifier
+## 12. Download Classifier (
 Visit this link: https://library.qiime2.org/data-resources#naive-bayes-classifiers
 Download the V3-V4 region-specific classifier instead of the full-length one to maximize species-level identification for Illumina MiSeq 2x300bp data.
 
-```
-# Download Silva 138 99% OTUs from 515F/806R region classifier
-curl -L -O "[https://data.qiime2.org/2024.10/common/silva-138-99-515f-806r-nb-classifier.qza](https://data.qiime2.org/2024.10/common/silva-138-99-515f-806r-nb-classifier.qza)"
-```
 ## 13. Generate taxonomy.qza file (Taxonomy assignments)
 ```
 qiime feature-classifier classify-sklearn \
-  --i-classifier silva-138-99-nb-classifier.qza \
+  --i-classifier 2024.09.backbone.v4.nb.sklearn-1.4.2.qza \
   --i-reads rep-seqs.qza \
-  --p-confidence 0.6 \
-  --o-classification taxonomy.qza \
-  --p-n-jobs 0
+  --p-confidence 0.7 \
+  --p-n-jobs 8 \
+  --o-classification taxonomy_gg2_c07.qza
 ```
 Now, we have two files ```table.qza``` and ```taxonomy.qza```
 
@@ -156,7 +152,7 @@ First, we need to organize data at species level.
 ```
 qiime taxa collapse \
   --i-table table.qza \
-  --i-taxonomy taxonomy.qza \
+  --i-taxonomy taxonomy_gg2_c07.qza \
   --p-level 7 \
   --o-collapsed-table species-table.qza
 ```
@@ -183,7 +179,7 @@ Collapse taxonomy at Phylum level
 ```
 qiime taxa collapse \
   --i-table table.qza \
-  --i-taxonomy taxonomy.qza \
+  --i-taxonomy taxonomy_gg2_c07.qza \
   --p-level 2 \
   --o-collapsed-table phylum-table.qza
 ```
@@ -207,7 +203,7 @@ Family (level 5)
 ```
 qiime taxa collapse \
   --i-table table.qza \
-  --i-taxonomy taxonomy.qza \
+  --i-taxonomy taxonomy_gg2_c07.qza \
   --p-level 5 \
   --o-collapsed-table family-table.qza
 ```
@@ -230,7 +226,7 @@ Genus level (level 6)
 ```
 qiime taxa collapse \
   --i-table table.qza \
-  --i-taxonomy taxonomy.qza \
+  --i-taxonomy taxonomy_gg2_c07.qza \
   --p-level 6 \
   --o-collapsed-table genus-table.qza
 ```
@@ -254,7 +250,7 @@ Species level (level 7)
 ```
 qiime taxa collapse \
   --i-table table.qza \
-  --i-taxonomy taxonomy.qza \
+  --i-taxonomy taxonomy_gg2_c07.qza \
   --p-level 7 \
   --o-collapsed-table species-table.qza
 ```
